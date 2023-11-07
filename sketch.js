@@ -10,6 +10,16 @@ let carImages = [];
 let sceneCount = 0;
 
 
+//collision car
+let collisionCarX = 10; // Initial X position of the collision car
+let collisionCarSpeed = 0; // Initial speed of the collision car
+let collisionCarAcceleration = 0.8; // Acceleration rate for the collision car
+let collisionDistanceToAccelerate = 650; // Distance to accelerate the collision car before showing the explosion
+let showCollisionExplosion = false;
+let collisionOccurred = false;
+
+
+
 function preload() {
   biker = loadImage('images/biker.png');
   road = loadImage('images/road2.jpeg')
@@ -23,13 +33,16 @@ function setup() {
   backgroundImages[0] = loadImage('images/bg_rain.gif');
   backgroundImages[1] = loadImage('images/bg_sunny.jpeg');
   backgroundImages[2] = loadImage('images/bg_sunny.jpeg');
-  //backgroundImages[3] = loadImage('images/bg_snow.gif');
+  backgroundImages[3] = loadImage('images/bg_snow.gif');
+  backgroundImages[4] = loadImage('images/bg_snow.gif');
   
   
   //Bikelane images
   bikelaneImages[0] = loadImage('images/nobikelane.jpeg');
   bikelaneImages[1] = loadImage('images/nobikelane.jpeg');
   bikelaneImages[2] = loadImage('images/bikelane2.png');
+  bikelaneImages[3] = loadImage('images/nobikelane.jpeg');
+  bikelaneImages[4] = loadImage('images/bikelane2.png');
 
 
   //load car images
@@ -38,6 +51,7 @@ function setup() {
   carImages[2] = loadImage('images/cars/car3.png');
   carImages[3] = loadImage('images/cars/car4.png');
   carImages[4] = loadImage('images/cars/car5.png');
+  collisionCar = loadImage('images/cars/car2.png');
 
 
   // Canvas & color settings
@@ -69,11 +83,12 @@ function draw() {
   image(road, 0, 300, width, 150)
   image(road, 0, 170, width, 150)
   image(road, 0, 40, width, 150)
+  image(road, 0, -90, width, 150)
 
   //Bikelanes
   // Update the bikelane image based on the sceneCount
     if (sceneCount < bikelaneImages.length) {
-      image(bikelaneImages[sceneCount], 650, 50, 150, height);
+      image(bikelaneImages[sceneCount], 650, 0, 150, height);
     }
 
   //initial pavement
@@ -105,11 +120,13 @@ function draw() {
   //Top header
   strokeWeight(2);
   fill(255, 150, 150);
-  rect(0, 0, width, 50);
+  //rect(0, 0, width, 50);
   strokeWeight(2);
   stroke(1);
-  displayScores();
   displayLocation();
+  displayScores();
+  bikerInLane();
+  collision();
 }
 
 // Key Codes - UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW
@@ -294,56 +311,105 @@ function checkWin() {
 
 
 function displayScores() {
-  textSize(12);
+  noStroke();
+  fill(255, 255, 255, 150)
+  //rect(30, 30, 150, 200, 5)
+
+
+  textSize(14);
   strokeWeight(0);
 // Display Lives
-  fill(0);
-  text('Lives:', 10, 20);
-  fill(120, 80, 80);
+  fill(255);
+  textStyle(BOLD)
+  text('Lives:', 43, 92);
+  fill(255);
   for(let i=0;i<3;i++){
-    ellipse(13*i+50, 15, 8);
+    ellipse(17*i+100, 86, 10);
   }
   
-  fill(0,80,70);
+  fill(255,80,70);
   textStyle(BOLD);
   textSize(16);
 
   for(let i=3;i>lives;i--){
-    text('X',13*i+31.5, 21);
+    text('X',17*i+78, 80, 10);
   }
-  textStyle(NORMAL);
-
+  textStyle(BOLD);
+  textSize(14);
   // Display Score
-  fill(0);
-  text(`Score: ${score}`, 10, 30);
+  fill(255);
+  text(`Score: ${score}`, 43, 132);
   
   // Display game over message if the game is over
   textSize(12);
-  text("Press space to restart.", width-200, 30);
+  text("Press space to restart.", width-150, 30);
   //text("Press 'm' to toggle music.", width-200,35);
 }
 
 
 function displayLocation() {
 
-  image(streetsign, 240, 7, 265, 35);
+  image(streetsign, 30, 20, 265, 35);
+  image(streetsign, 30, 70, 140, 35);
+  image(streetsign, 30, 110, 140, 35);
 
   textStyle(BOLD);
-  textSize(14);
-  text('Location:', 170, 30)
-  text('Weather:', 550, 30)
-  text('Bike Lane:', 800, 30)
+  textSize(15);
+  //text('Location:', 170, 30)
+  //text('Weather:', 550, 30)
+  //text('Bike Lane:', 800, 30)
 
   textStyle(BOLD);
   fill(255);
-  text(bikerDetails.location[sceneCount], 255, 30)
+  text(bikerDetails.location[sceneCount], 43, 42)
   fill(0);
   textStyle(NORMAL);
-  text(bikerDetails.weather[sceneCount], 615, 30)
-  text(bikerDetails.bikelane[sceneCount], 875, 30)
-
-  //console.log(bikerDetails.location[sceneCount])
-  console.log(height)
+  //text(bikerDetails.weather[sceneCount], 615, 30)
+  //text(bikerDetails.bikelane[sceneCount], 875, 30)
 }
 
+
+function bikerInLane() {
+  if (frogY < 562 && frogX > 800) {
+    fill(255, 255, 255, 150)
+    rect(frogX + 50, frogY-30, 170, 40, 10)
+    fill(0);
+    textSize(14);
+    text("❗Out of bike lane❗", frogX + 65, frogY - 5);
+  }
+
+  if (frogY < 562 && frogX < 640) {
+    fill(255, 255, 255, 150)
+    rect(frogX - 220, frogY-30, 170, 40, 10)
+    fill(0);
+    textSize(14);
+    text("❗Out of bike lane❗", frogX -208, frogY - 5);
+  }
+
+}
+
+
+function collision() {
+  if (frogY < 300) {
+    if (collisionCarX < collisionDistanceToAccelerate) {
+    // Accelerate the collision car
+    collisionCarSpeed += collisionCarAcceleration;
+    collisionCarX += collisionCarSpeed;
+    } else if (!collisionOccurred) {
+      // Set the flag to indicate a collision has occurred
+      collisionOccurred = true;
+      showCollisionExplosion = true;
+      lives -= 1; // Deduct a life
+    }
+
+    // Draw the collision car
+    image(collisionCar, collisionCarX, 200, 70, 40);
+
+    // Show the explosion emoji
+    if (showCollisionExplosion) {
+      textSize(70);
+      text("💥", collisionCarX+40, 200, 100, 100)
+    } 
+  }
+}
 
