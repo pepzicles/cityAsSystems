@@ -141,6 +141,11 @@ function draw() {
     collision();
   }
 
+  //Restart game if win
+  if (sceneCount == 5) {
+    gameWin();
+  }
+
   //relieved face in scene 1
   if (sceneCount == 1){
     relievedFace();
@@ -293,13 +298,28 @@ function gameOver(){
   text("Click to restart.", 64,340);  
 }
 
+function gameWin() {
+  textSize(60);
+  fill(255);
+
+  noStroke();
+  text("YOU WIN!", 64,300);
+  textSize(20);
+  text("Click enter to restart.", 64, 340);  
+
+  if (keyCode === ENTER) {
+    window.location.reload();
+  }
+  
+}
+
 function win(){
   textSize(60);
   noStroke();
   fill(120,80,90);
   text("YOU WIN!!!", 100,280);
-  textSize(20);
-  text('Click to continue in sandbox mode.', 100, 300);
+  // textSize(20);
+  // text('Click to continue in sandbox mode.', 100, 300);
 }
 
 function checkWin() {
@@ -485,4 +505,8 @@ function hurryFace() {
   textStyle(NORMAL);
   textSize(15);
   text("In a hurry!", 1285, 590)
+}
+
+function reloadPage() {
+  window.location.reload();
 }
