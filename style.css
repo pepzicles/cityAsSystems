@@ -1,7 +1,82 @@
 html, body {
   margin: 0;
   padding: 0;
+  font-family: "Helvetica";
 }
 canvas {
   display: block;
+}
+
+
+.aboutButton{
+  background-color: rgb(43, 142, 114); /* Green background color */
+  border: none; /* Remove the border */
+  color: white;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  border-radius: 20px;
+  cursor: pointer;
+  position: fixed;
+  font-weight: bold;
+  margin-left: 1300px;
+  margin-top: 15px;
+}
+
+.aboutButton:hover{
+  background-color: #09805d;
+  cursor: pointer;
+}
+
+
+.gameButton{
+  background-color: rgb(43, 142, 114); /* Green background color */
+  border: none; /* Remove the border */
+  color: white;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: "Arial";
+  margin-left: 50px;
+  margin-top: 0px;
+}
+
+.gameButton:hover{
+  background-color: #09805d;
+  cursor: pointer;
+}
+
+.aboutDiv{
+  width: 600px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+}
+
+.aboutP{
+  color: white;
+  line-height: 30px;
+}
+
+.dataDiv{
+  color: white;
+  margin-left: 100px;
+  line-height: 30px;
+}
+
+a{
+  color: rgb(179, 231, 255);
+  display: inline;
+}
+
+.logo{
+  width: 200px;
+  margin-left: 50px;
+  margin-top: 10px;
 }

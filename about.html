@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body style = "background-color: rgb(45, 45, 45);">
+    <div class = "aboutBackground">
+      
+      <img class = "logo" src="images/logo.png" alt="logo">  
+      <br>
+      <a href="index.html" class="gameButton">Back to game</a>
+    
+    </div>
+
+    <div style = "
+            margin-top: 30px;
+            display: flex;
+            flex-direction: row;
+        ">
+        
+        <div class = "aboutDiv" style = "flex: 1;">
+            <p class = "aboutP"><strong>Are bike lanes beneficial in ensuring the safety of bikers in Manhattan?</strong>
+            <br>
+            <br>
+            As a team, we explore the concept of safe biking and the possible reconfiguration of bike lanes as a whole. Together, we focus on drivers and bikers' interactions on the roads in Manhattan and have designed an immersive game to allow our users a glimpse into the world of biking in New York City.
+            <br>
+            <br>
+            With a few weeks of observations, we got the opportunity to study the habits of bikers and vehicles. Using the data we collected as a guide for our design along with four external NYC data sources, we presented five scenes according to what we witnessed. Each of us collected data on both roads with and without bike lanes to see how bikers adjusted and how this changed their trip. 
+            <br>
+            <br>
+            In order to decipher the emotions of bikers, we will be observing their facial expressions, body language and distinguishing between a selection of varying emotions such as the following: 
+            <br>
+            <br>
+            •	Indifferent
+            <br>
+            •	Relieved
+            <br>
+            •	Angry
+            <br>
+            •	Sad
+            <br>
+            •	Frustrated
+            <br>
+            •	Relaxed
+            <br>
+            •	In a hurry
+            </p>
+        </div>
+    
+
+        <div class = "dataDiv" style = "flex: 1">
+            <p>Data sources:</p>
+            <a href = "https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95">NYC Open Data: Motor Vehicle Collisions - Crashes</a> 
+            <br>
+            <a href = "https://www.nyc.gov/html/dot/downloads/pdf/bicycle-crash-data-report-2022.pdf">NYC Gov: Bicycle Crash Data 2022 Report</a> 
+            <br>
+            <a href = "https://crashmapper.org/#/?cfat=true&cinj=true&endDate=2023-05&geo=borough&identifier=Brooklyn&lat=40.64774475814378&lng=-73.8679695390625&lngLats=%255B%255D&mfat=true&minj=true&noInjFat=false&pfat=true&pinj=true&startDate=2023-05&vbicycle=true&vbusvan=true&vcar=true&vmotorcycle=true&vother=true&vscooter=true&vsuv=true&vtruck=true&zoom=11">NYC Crash Mapper</a> 
+            <br>
+            <a href = "https://data.cityofnewyork.us/Transportation/New-York-City-Bike-Routes/7vsa-caz7">NYC Open Data: New York City Bike Routes</a> 
+        </div>
+    
+
+    </div>
+
+    
+    
+    <script src="bikerDeets.js"></script>
+    <!--collide2d-->
+    <script src="https://unpkg.com/p5.collide2d"></script>
+    <!-- import the p5 sound library -->
+    <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.js"></script>
+  </body>
+</html>

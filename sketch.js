@@ -3,6 +3,9 @@ let carX,carY, carV, dasTime, startX, sandbox;
 let bg, music;
 
 
+//facial expression images
+let expressions = []
+
 //to change background images
 let backgroundImages = [];
 let bikelaneImages = [];
@@ -17,6 +20,7 @@ let collisionCarAcceleration = 0.8; // Acceleration rate for the collision car
 let collisionDistanceToAccelerate = 650; // Distance to accelerate the collision car before showing the explosion
 let showCollisionExplosion = false;
 let collisionOccurred = false;
+let collisionScene = false;
 
 
 
@@ -25,6 +29,9 @@ function preload() {
   road = loadImage('images/road2.jpeg')
   pavement = loadImage('images/pavement.jpeg')
   streetsign = loadImage('images/streetsign.png')
+  relieved = loadImage('images/relieved.png')
+  hurry = loadImage('images/hurry.png')
+  logo = loadImage('images/logo.png')
 }
 
 
@@ -126,7 +133,28 @@ function draw() {
   displayLocation();
   displayScores();
   bikerInLane();
-  collision();
+  
+  
+
+  //Only trigger collision in scenes 0, 3, 4
+  if (sceneCount == 0 || sceneCount == 3 || sceneCount == 4) {
+    collision();
+  }
+
+  //relieved face in scene 1
+  if (sceneCount == 1){
+    relievedFace();
+  }
+
+  if (sceneCount == 2){
+    hurryFace();
+  }
+
+
+  //LOGO!
+  fill(220);
+  circle(40, 650, 60);
+  image(logo, 15, 625, 50, 50)
 }
 
 // Key Codes - UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW
@@ -257,11 +285,12 @@ function mousePressed(){
 
 function gameOver(){
   textSize(60);
-  fill(0,80,90);
+  fill(255);
+
   noStroke();
-  text("GAME OVER", 64,280);
+  text("GAME OVER", 64,300);
   textSize(20);
-  text("Click to restart.", 180,320);  
+  text("Click to restart.", 64,340);  
 }
 
 function win(){
@@ -342,7 +371,8 @@ function displayScores() {
   
   // Display game over message if the game is over
   textSize(12);
-  text("Press space to restart.", width-150, 30);
+  fill(200);
+  text("Press space to restart.", 30, 168);
   //text("Press 'm' to toggle music.", width-200,35);
 }
 
@@ -399,7 +429,7 @@ function collision() {
       // Set the flag to indicate a collision has occurred
       collisionOccurred = true;
       showCollisionExplosion = true;
-      lives -= 1; // Deduct a life
+      //lives -= 1; // Deduct a life
     }
 
     // Draw the collision car
@@ -408,8 +438,51 @@ function collision() {
     // Show the explosion emoji
     if (showCollisionExplosion) {
       textSize(70);
-      text("💥", collisionCarX+40, 200, 100, 100)
+      text("💥", collisionCarX + 40, 200, 100, 100)
+      
+      //Explain the collision
+      fill(255, 255, 255, 200);
+      rect(450, 200, 170, 155, 5);
+      textSize(14);
+      fill(0);
+      text("Cyclists injured:", 460, 223);
+      text("Cyclists killed:", 460, 240);
+      text("Motorists injured:", 460, 257);
+      text("Motorists killed:", 460, 274);
+      textStyle(NORMAL);
+      text(bikerDetails.cylistsInjured[sceneCount], 590, 223);
+      text(bikerDetails.cyclistsKilled[sceneCount], 590, 240);
+      text(bikerDetails.motoristsInjured[sceneCount], 590, 257);
+      text(bikerDetails.motoristsKilled[sceneCount], 590, 274);
+      textSize(12);
+      text("Source: NYC Crash Mapper", 460, 305);
+      textStyle(BOLD);
+      text("Resume game as normal!", 460, 340)
     } 
   }
 }
 
+
+function relievedFace() {
+  fill(255, 255, 255, 200);
+  rect(1175, 530, 220, 125, 5);
+  image(relieved, 1175, 530, 120, 120);
+  fill(0);
+  textSize(13);
+  text("Biker is feeling:", 1285, 560);
+  textStyle(NORMAL);
+  textSize(15);
+  text("Relieved", 1285, 590)
+}
+
+function hurryFace() {
+  fill(255, 255, 255, 200);
+  rect(1175, 530, 220, 125, 5);
+  image(hurry, 1175, 530, 100, 130);
+  fill(0);
+  textSize(13);
+  text("Biker is feeling:", 1285, 560);
+  textStyle(NORMAL);
+  textSize(15);
+  text("In a hurry!", 1285, 590)
+}
